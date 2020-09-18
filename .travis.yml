@@ -9,6 +9,6 @@ sudo: false
 notifications:
   email:
     recipients:
-      -sergeykinn@mail.ru
+      - sergeykinn@mail.ru
     on_success: never # default: change
     on_failure: always # default: always
