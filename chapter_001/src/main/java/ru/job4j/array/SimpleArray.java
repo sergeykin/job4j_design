@@ -31,7 +31,7 @@ public class SimpleArray<T> implements Iterable<T> {
     public void remove(int index) {
         Objects.checkIndex(index, position);
         System.arraycopy(this.array, index + 1, this.array, index, array.length - index - 1);
-        position--;
+        array[position--] = null;
     }
 
     public T get(int index) {
@@ -45,7 +45,7 @@ public class SimpleArray<T> implements Iterable<T> {
             int pos = 0;
             @Override
             public boolean hasNext() {
-                return pos < array.length;
+                return pos < position;
             }
 
             @Override

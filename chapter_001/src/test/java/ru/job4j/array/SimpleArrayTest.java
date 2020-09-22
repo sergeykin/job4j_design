@@ -34,5 +34,10 @@ public class SimpleArrayTest {
         array.get(0);
     }
 
+    @Test(expected = NoSuchElementException.class)
+    public void whenGetEmptyFromIt() {
+        SimpleArray<String> array = new SimpleArray<>(0);
+        array.iterator().next();
+    }
 
 }
