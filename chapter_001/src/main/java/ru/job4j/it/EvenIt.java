@@ -13,12 +13,11 @@ public class EvenIt implements Iterator<Integer> {
 
     @Override
     public boolean hasNext() {
-        if (point < data.length) {
+        while (point < data.length) {
             if (data[point] % 2 == 0) {
                 return true;
             }
             point++;
-            return hasNext();
         }
         return false;
     }
