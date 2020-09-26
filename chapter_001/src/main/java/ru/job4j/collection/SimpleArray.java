@@ -26,11 +26,15 @@ public class SimpleArray<T> implements Iterable<T> {
     }
 
     public void add(T model) {
+        grow();
+        this.array[position++] = model;
+        modCount++;
+    }
+
+    private void grow() {
         if (position == array.length) {
             this.array = Arrays.copyOf(this.array, position + 1);
         }
-        this.array[position++] = model;
-        modCount++;
     }
 
     public void set(int index, T model) {
