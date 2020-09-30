@@ -8,21 +8,13 @@ public class SimpleQueue<T> {
     private final SimpleStack<T> out = new SimpleStack<>();
 
     public T poll() {
-        try {
-            return out.pop();
-        } catch (NoSuchElementException e) {
-            T tmpin;
-            try {
-                while (true) {
-                    tmpin = in.pop();
-                    out.push(tmpin);
-                }
-            } catch (NoSuchElementException e2) {
-                return out.pop();
+        if (out.isEmpty()) {
+            while (!in.isEmpty()) {
+                out.push(in.pop());
             }
-
         }
-    }
+        return out.pop();
+     }
 
     public void push(T value) {
         in.push(value);
