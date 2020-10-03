@@ -13,6 +13,7 @@ public class SimpleSetTest {
     public void whenAddThenIt() {
         SimpleSet<String> set = new SimpleSet<>();
         set.add("first");
+        set.add("first");
         set.add("second");
         set.add("first");
         Iterator<String> iterator = set.iterator();
