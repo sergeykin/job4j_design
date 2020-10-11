@@ -30,7 +30,7 @@ public class SimpleHashMap<K, V> implements Iterable<V> {
 
     public V get(K key) {
         Entry<K, V> e = entries[(entries.length - 1) & hash(key)];
-        return e == null ? null : e.value;
+        return e == null ? null : e.key.equals(key) ? e.value : null;
     }
 
     boolean delete(K key) {
@@ -39,7 +39,7 @@ public class SimpleHashMap<K, V> implements Iterable<V> {
 
     private boolean remove(int hash, Object key) {
         int i = (entries.length - 1) & hash;
-        if (entries[i] != null && entries[i].key.equals(key)) {
+        if (Objects.equals(entries[i].key, key)) {
             entries[i] = null;
             ++modCount;
             --size;
