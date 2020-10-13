@@ -12,12 +12,31 @@ public class SimpleHashMap<K, V> implements Iterable<V> {
     static final int DEFAULT_INITIAL_CAPACITY = 1 << 4;
     static final float LOAD_FACTOR = 0.75f;
 
-    private Entry<K, V>[] entries;
+    public Entry<K, V>[] entries;
     private int size;
     private int modCount;
     private int threshold;
+    private static int tableSize;
 
+    public static void main(String[] args) {
+        SimpleHashMap<Integer, String> simpleHashMap = new SimpleHashMap<>();
+        for (int i = 1; i < 30; i ++) {
+            simpleHashMap.insert(i, String.valueOf(i));
+        }
+
+//        for (int i = 30; i > 0; i--) {
+//            simpleHashMap.insert(i, String.valueOf(i));
+//        }
+//        for (int i = 6; i < 10; i++) {
+//            simpleHashMap.delete(i);
+//        }
+
+        System.out.println(simpleHashMap.get(8));
+    }
+
+    @SuppressWarnings("checkstyle:EmptyLineSeparator")
     public SimpleHashMap() {
+        this.tableSize = DEFAULT_INITIAL_CAPACITY;
     }
 
     public int size() {
@@ -30,7 +49,7 @@ public class SimpleHashMap<K, V> implements Iterable<V> {
 
     public V get(K key) {
         Entry<K, V> e = entries[(entries.length - 1) & hash(key)];
-        return e == null ? null : e.key.equals(key) ? e.value : null;
+        return e == null ? null : Objects.equals(e.key, key) ? e.value : null;
     }
 
     boolean delete(K key) {
@@ -100,17 +119,28 @@ public class SimpleHashMap<K, V> implements Iterable<V> {
         if (oldTab != null) {
             System.arraycopy(oldTab, 0, newTab, 0, oldTab.length);
         }
+        if (newCap > tableSize) {
+            tableSize = newCap;
+            for (int i = 0; i < oldTab.length; i++) {
+                if (oldTab[i] != null) {
+                    int hash = hash(oldTab[i].key);
+                    int ii = (newTab.length - 1) & hash;
+                    newTab[ii] = oldTab[i];
+                    newTab[ii].hash = hash;
+                }
+            }
+        }
         return newTab;
     }
 
     @SuppressWarnings("checkstyle:InnerAssignment")
     private static int hash(Object key) {
         int h;
-        return (key == null) ? 0 : (h = key.hashCode()) ^ (h >>> 16);
+        return (key == null) ? 0 : key.hashCode() % tableSize;
     }
 
     private static class Entry<K, V> {
-        final int hash;
+        int hash;
         final K key;
         V value;
 
