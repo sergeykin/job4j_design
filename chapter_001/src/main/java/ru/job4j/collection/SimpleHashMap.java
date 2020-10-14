@@ -12,7 +12,7 @@ public class SimpleHashMap<K, V> implements Iterable<V> {
     static final int DEFAULT_INITIAL_CAPACITY = 1 << 4;
     static final float LOAD_FACTOR = 0.75f;
 
-    public Entry<K, V>[] entries;
+    private Entry<K, V>[] entries;
     private int size;
     private int modCount;
     private int threshold;
@@ -124,7 +124,7 @@ public class SimpleHashMap<K, V> implements Iterable<V> {
             for (int i = 0; i < oldTab.length; i++) {
                 if (oldTab[i] != null) {
                     int hash = hash(oldTab[i].key);
-                    int ii = (newTab.length - 1) & hash;
+                    int ii = (newTab.length - 1) % hash;
                     newTab[ii] = oldTab[i];
                     newTab[ii].hash = hash;
                 }
