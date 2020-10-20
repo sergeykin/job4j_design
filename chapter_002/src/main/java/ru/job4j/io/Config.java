@@ -23,7 +23,7 @@ public class Config {
                     String[] keyValue = line.split("=");
                     if (keyValue.length == 2) {
                         values.put(keyValue[0].trim(), keyValue[1].trim());
-                        System.out.println(line);
+                        //System.out.println(line);
                     }
                 }
             }

@@ -3,6 +3,7 @@ package ru.job4j.io;
 import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
 import java.io.PrintWriter;
+import java.util.List;
 
 public class ResultFile {
 //    public static void main(String[] args) {
@@ -29,4 +30,16 @@ public static void main(String[] args) {
         e.printStackTrace();
     }
 }
+
+    public void save(String file) {
+        try (PrintWriter out = new PrintWriter(
+                new BufferedOutputStream(
+                        new FileOutputStream(file)
+                ))) {
+            out.write("Hello new File" + System.lineSeparator());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
