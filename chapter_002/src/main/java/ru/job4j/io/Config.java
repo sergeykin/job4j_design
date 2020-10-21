@@ -9,7 +9,7 @@ import java.util.StringJoiner;
 
 public class Config {
     private final String path;
-    private final Map<String, String> values = new HashMap<String, String>();
+    private final Map<String, String> values = new HashMap<>();
 
     public Config(final String path) {
         this.path = path;
@@ -19,7 +19,8 @@ public class Config {
         try (BufferedReader read = new BufferedReader(new FileReader(this.path))) {
             String line;
             while ((line = read.readLine()) != null) {
-                if (!line.trim().isEmpty() && !line.trim().startsWith("!") && !line.trim().startsWith("#") && line.contains("=")) {
+                line = line.trim();
+                if (!line.isEmpty() && !line.startsWith("!") && !line.startsWith("#") && line.contains("=")) {
                     String[] keyValue = line.split("=");
                     if (keyValue.length == 2) {
                         values.put(keyValue[0].trim(), keyValue[1].trim());
