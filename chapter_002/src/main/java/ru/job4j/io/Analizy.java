@@ -6,25 +6,26 @@ import java.util.*;
 
 public class Analizy {
     public void unavailable(String source, String target) {
-        Map<String, String> map = new TreeMap<>();
+        Map<String, String> map = new LinkedHashMap<>();
         boolean isNewRange = true;
         try (BufferedReader read = new BufferedReader(new FileReader(source))) {
             String line;
             String tmpKey = "";
             while ((line = read.readLine()) != null) {
-                if (!line.trim().isEmpty()) {
+                line = line.trim();
+                if (!line.isEmpty()) {
                     String[] keyValue = line.split(" ");
                     if (keyValue.length == 2) {
-                        if (keyValue[0].trim().equals("200") || keyValue[0].trim().equals("300")) {
+                        if (keyValue[0].equals("200") || keyValue[0].equals("300")) {
                             isNewRange = true;
                         }
-                        if (keyValue[0].trim().equals("400") || keyValue[0].trim().equals("500")) {
+                        if (keyValue[0].equals("400") || keyValue[0].equals("500")) {
                             if (isNewRange) {
-                                tmpKey = keyValue[1].trim();
+                                tmpKey = keyValue[1];
                                 map.put(tmpKey, tmpKey);
                                 isNewRange = false;
                             } else {
-                                map.put(tmpKey, keyValue[1].trim());
+                                map.put(tmpKey, keyValue[1]);
                             }
                         }
                     }
