@@ -13,19 +13,6 @@ public class ArgZip {
     private final String[] args;
     private Map<String, String> params = new LinkedHashMap<>();
 
-    public static void main(String[] args) throws IOException {
-        ArgZip argZip = new ArgZip(args);
-        if (argZip.valid()) {
-            SearchFiles searchFiles = new SearchFiles(p -> !p.toFile().getName().endsWith(argZip.exclude()));
-            Files.walkFileTree(Paths.get(argZip.directory()), searchFiles);
-            new Zip().packFiles(searchFiles.list,
-                    new File(argZip.output())
-            );
-        } else {
-            throw new IllegalArgumentException("Root folder is null or Exclude is null or Output file is null.");
-        }
-    }
-
     public ArgZip(String[] args) {
         this.args = args;
         for (int i = 0; i < args.length; i++) {
