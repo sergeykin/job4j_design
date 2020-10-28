@@ -19,7 +19,7 @@ public class ConsoleChat {
         this.botAnswers = botAnswers;
         encoding = new UsageEncoding();
         String s = encoding.readFile(botAnswers);
-        listBotAnswers = new ArrayList<String>(Arrays.asList(s.split(System.lineSeparator())));
+        listBotAnswers = new ArrayList<>(Arrays.asList(s.split(System.lineSeparator())));
     }
 
     public String getBotMessage() {
@@ -29,11 +29,12 @@ public class ConsoleChat {
     public void run() {
         System.out.println(listBotAnswers);
         Scanner myObj = new Scanner(System.in);
-        String userMessage = "";
+        String userMessage;
+        StringBuilder log = new StringBuilder();
         boolean isContinue = true;
         do {
             userMessage = myObj.nextLine();
-            encoding.writeDataInFile(path, userMessage);
+            log.append(userMessage).append(System.lineSeparator());
             if (userMessage.equals(STOP)) {
                 isContinue = false;
             }
@@ -43,9 +44,10 @@ public class ConsoleChat {
             if (isContinue) {
                 String botMessage = getBotMessage();
                 System.out.println(botMessage);
-                encoding.writeDataInFile(path, botMessage);
+                log.append(botMessage).append(System.lineSeparator());
             }
         } while (!userMessage.equals(OUT));
+        encoding.writeDataInFile(path, log.toString());
 
     }
 
