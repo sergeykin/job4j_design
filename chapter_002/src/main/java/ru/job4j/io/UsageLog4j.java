@@ -1,7 +1,7 @@
 package ru.job4j.io;
 
 import org.apache.log4j.LogManager;
-import org.apache.logging.log4j;
+import org.apache.log4j.Logger;
 
 public class UsageLog4j {
 
