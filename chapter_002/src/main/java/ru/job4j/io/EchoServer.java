@@ -8,7 +8,6 @@ import java.net.Socket;
 public class EchoServer {
     private static final String HELLO = "Hello";
     private static final String EXIT = "Exit";
-    private static final String ANY = "Any";
 
     @SuppressWarnings("checkstyle:InnerAssignment")
     public static void main(String[] args) throws IOException {
@@ -19,28 +18,22 @@ public class EchoServer {
                      BufferedReader in = new BufferedReader(
                              new InputStreamReader(socket.getInputStream()))) {
                     String str;
-                    boolean isBreak = false;
                     while (!(str = in.readLine()).isEmpty()) {
                         System.out.println(str);
                         if (str.contains("?msg=")) {
                             break;
                         }
                     }
-                    if (isBreak) {
-                        break;
-                    }
                     String outMessage = "";
                     if (str.contains(HELLO)) {
                         outMessage = HELLO;
-                    } else if (str.contains(ANY)) {
-                        outMessage = ANY;
                     } else if (str.contains(EXIT)) {
                         break;
                     } else {
-                        outMessage = "Hello, dear friend.";
+                        String[] ss = str.split(" ");
+                        outMessage = ss[1].substring(6);
                     }
-                    out.write("HTTP/1.1 200 OK\r\n\r\n".getBytes());
-                    out.write(outMessage.concat("\r\n\r\n").getBytes());
+                    out.write("HTTP/1.1 200 OK\r\n\r\n".concat(outMessage).concat("\r\n\r\n").getBytes());
                 }
             }
         }
