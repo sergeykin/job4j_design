@@ -28,5 +28,11 @@ public class UsageLog4j {
         double	eight = 34342222.34342;
         boolean	nine = true;
         LOG.debug("first : {}, second : {}, third : {}, four : {}, five : {}, six : {}, seven : {}, eight : {}, nine : {}", first, second, third, four, five, six, seven, eight, nine);
+
+        try {
+            throw new Exception("Not supported code");
+        } catch (Exception e) {
+            LOG.error("Exception in log example", e);
+        }
     }
 }
