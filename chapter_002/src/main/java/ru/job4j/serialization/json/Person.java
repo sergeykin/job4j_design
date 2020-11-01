@@ -53,4 +53,12 @@ public class Person {
         final Person personGson = gson.fromJson(gson.toJson(person), Person.class);
         System.out.println(personGson);
     }
+
+    public boolean isSex() {
+        return sex;
+    }
+
+    public int getAge() {
+        return age;
+    }
 }
