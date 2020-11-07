@@ -48,7 +48,6 @@ public class ConsoleChat {
             }
         } while (!userMessage.equals(OUT));
         encoding.writeDataInFile(path, log.toString());
-
     }
 
     public static void main(String[] args) {
