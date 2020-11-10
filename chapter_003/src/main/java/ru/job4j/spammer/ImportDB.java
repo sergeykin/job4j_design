@@ -26,7 +26,14 @@ public class ImportDB {
             while ((line = rd.readLine()) != null) {
                 if (line.contains(";")) {
                     String[] part = line.split(";");
-                    users.add(new User(part[0], part[1]));
+                    if (part.length > 1) {
+                        String user = part[0].trim();
+                        String email = part[1].trim();
+                        //без проверки email
+                        if (user.length() > 0 && email.length() > 0 ){
+                            users.add(new User(user, email));}
+                    }
+
                 }
             }
         }
