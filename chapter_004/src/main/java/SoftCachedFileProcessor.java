@@ -17,7 +17,7 @@ public class SoftCachedFileProcessor {
     }
 
     public List<String> getFile(String fileName) throws IOException {
-        if (cache.containsKey(fileName)) {
+        if (cache.containsKey(fileName) && softReference.get().get(fileName) != null) {
             return softReference.get().get(fileName);
         } else {
             List<String> list = Files.readAllLines(Paths.get(fileName));
