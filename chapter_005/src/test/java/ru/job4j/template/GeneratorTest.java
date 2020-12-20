@@ -18,13 +18,13 @@ public class GeneratorTest {
         assertThat("I am a Sergey, Who are you?", is(generator.produce("I am a ${name}, Who are ${subject}?", Map.of("name","Sergey", "subject", "you"))));
     }
 
-    @Test(expected = Exception.class)
+    @Test(expected = IllegalArgumentException.class)
     public void produce02() throws Exception {
         Generator generator = new GeneratorImpl();
         assertThat("I am a Sergey, Who are you?", is(generator.produce("I am a , Who are ${subject}?", Map.of("name","Sergey", "subject", "you"))));
     }
 
-    @Test(expected = AssertionError.class)
+    @Test(expected = IllegalArgumentException.class)
     public void produce03() throws Exception {
         Generator generator = new GeneratorImpl();
         assertThat("I am a Sergey, Who are you?", is(generator.produce("I am a ${name}, Who are ${subject}?", Map.of("name","Sergey"))));
