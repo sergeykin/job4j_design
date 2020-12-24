@@ -21,9 +21,13 @@ public class ReportHR implements Report {
         for (Employee employee : sortedList) {
             text.append(System.lineSeparator())
                     .append(employee.getName()).append(";")
-                    .append(employee.getSalary()).append(";")
+                    .append(getSalary(employee)).append(";")
                     .append(System.lineSeparator());
         }
         return text.toString();
+    }
+
+    private Double getSalary(Employee employee) {
+        return employee.getSalary();
     }
 }

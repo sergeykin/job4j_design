@@ -23,9 +23,13 @@ public class ReportBookkeeping implements Report {
                     .append(employee.getName()).append(";")
                     .append(employee.getHired()).append(";")
                     .append(employee.getFired()).append(";")
-                    .append(employee.getSalary()*100).append(";")
+                    .append(getSalary(employee)).append(";")
                     .append(System.lineSeparator());
         }
         return text.toString();
+    }
+
+    private Double getSalary(Employee employee) {
+        return employee.getSalary() * 1000;
     }
 }

@@ -26,11 +26,14 @@ public class ReportProgrammers implements Report {
                     .append("<td>").append(employee.getName()).append("</td>")
                     .append("<td>").append(employee.getHired()).append("</td>")
                     .append("<td>").append(employee.getFired()).append("</td>")
-                    .append("<td>").append(employee.getSalary()).append("</td>")
+                    .append("<td>").append(getSalary(employee)).append("</td>")
                     .append("</tr>");
         }
         text.append("</table>");
         return text.toString();
+    }
+    private Double getSalary(Employee employee) {
+        return employee.getSalary();
     }
 
 }
