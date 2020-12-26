@@ -30,6 +30,6 @@ public class ReportBookkeeping implements Report {
     }
 
     private Double getSalary(Employee employee) {
-        return employee.getSalary() * 1000;
+        return (new ConvertMoneyBookKeeping()).convert(employee.getSalary());
     }
 }
