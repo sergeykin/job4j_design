@@ -9,10 +9,26 @@ public class Warehouse implements Storage {
     public Warehouse() {
         storage = new ArrayList<>();
     }
+
     @Override
-    public boolean add(Food food) {
+    public boolean accept(Food food) {
+        double percent = CalcPercent.calc(food);
+        if (percent >= 0 && percent < 25 ) {
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public List<Food> clear() {
+        List<Food> list = new ArrayList<>(storage);
+        storage.clear();
+        return list;
+    }
+
+    @Override
+    public void add(Food food) {
         storage.add(food);
-        return true;
     }
 
     @Override

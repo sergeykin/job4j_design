@@ -1,56 +1,61 @@
 package ru.job4j.product;
-import org.joda.time.DateTime;
-import org.joda.time.Days;
+
+import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
+import java.util.List;
 
 public class ControlQuality {
-    public Warehouse getWarehouse() {
-        return warehouse;
+
+    public List<Storage> getStorages() {
+        return storages;
     }
 
-    public Shop getShop() {
-        return shop;
-    }
+    private final List<Storage> storages ;
 
-    public Trash getTrash() {
-        return trash;
-    }
-
-    private Warehouse warehouse;
-    private Shop shop;
-    private Trash trash;
-
-    public ControlQuality(Warehouse warehouse, Shop shop, Trash trash) {
-        this.warehouse = warehouse;
-        this.shop = shop;
-        this.trash = trash;
+    public ControlQuality(List<Storage> storages) {
+        this.storages = new ArrayList<>(storages);
     }
 
     public void control(Food food) {
-        Date today = Calendar.getInstance().getTime();
-        Calendar expaireDate = food.getExpaireDate();
-        Calendar createDate = food.getCreateDate();
-        int expDay = Days.daysBetween(new DateTime(createDate), new DateTime(expaireDate)).getDays();
-        double dayExpired = Days.daysBetween(new DateTime(expaireDate), new DateTime(today)).getDays();
-        double percent = (1 - (dayExpired / expDay))*100;
-        if (percent < 25) {
-            warehouse.add(food);
-            return;
+        for (Storage storage:storages) {
+            if (storage.accept(food)) {
+                storage.add(food);
+            }
         }
-        if (percent <= 75) {
-            shop.add(food);
-            warehouse.delete(food);
-            return;
+    }
+
+    public void distibute() {
+        List<Food> foods = new ArrayList<>();
+        for (Storage storage:storages) {
+            foods.addAll(storage.clear());
         }
-        if (percent <= 100) {
-            shop.delete(food);
-            food.setDisscount(10);
-            shop.add(food);
-            return;
+        for (Food food:foods) {
+            this.control(food);
         }
-        shop.delete(food);
+    }
+
+    public static void main(String[] args) {
+        String name = "food1";
+        Calendar expaireDate = Calendar.getInstance();
+        expaireDate.add(Calendar.DAY_OF_YEAR, 1);
+        Calendar createDate = Calendar.getInstance();
+        createDate.add(Calendar.DAY_OF_YEAR, -2);
+        double price = 120;
+        Food food = new Food(name, expaireDate, createDate, price);
+        List<Food> foods = new ArrayList<>();
+        foods.add(food);
+        List<Storage> storageList = new ArrayList<>();
+        storageList.add(new Warehouse());
+        Storage shop = new Shop();
+        //shop.add(food);
+        storageList.add(new Shop());
+        Storage trash = new Trash();
         trash.add(food);
+        storageList.add(trash);
+        //storageList.add(new Trash());
+        ControlQuality controlQuality = new ControlQuality(storageList);
+        controlQuality.distibute();
+        System.out.println(controlQuality.getStorages().get(1).getStorage());
     }
 
 }
