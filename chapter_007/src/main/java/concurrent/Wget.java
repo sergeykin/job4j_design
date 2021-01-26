@@ -12,7 +12,7 @@ public class Wget {
                         }
                         System.out.println("\rLoading :Loaded.");
                     } catch (InterruptedException e) {
-                        e.printStackTrace();
+                        Thread.currentThread().interrupt();
                     }
                 }
         );
