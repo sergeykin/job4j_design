@@ -3,9 +3,9 @@ package concurrent;
 import java.util.Arrays;
 
 public class ConsoleProgress implements Runnable {
-    String[] process = {"-", "\\", "|", "/"};
     @Override
     public void run() {
+        String[] process = {"-", "\\", "|", "/"};
         int count = 0;
         while (!Thread.currentThread().isInterrupted()) {
             try {
