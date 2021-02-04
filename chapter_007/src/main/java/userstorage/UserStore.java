@@ -1,7 +1,7 @@
 package userstorage;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.HashMap;
+import java.util.Map;
 
 import net.jcip.annotations.GuardedBy;
 import net.jcip.annotations.ThreadSafe;
@@ -9,46 +9,32 @@ import net.jcip.annotations.ThreadSafe;
 @ThreadSafe
 public class UserStore {
     @GuardedBy("this")
-    private Set<User> userList;
+    private Map<Integer,User> userList;
 
     public UserStore() {
-        userList = new HashSet<>();
+        userList = new HashMap<>();
     }
 
-    public synchronized boolean add (User user){
-        return userList.add(user);
+    public synchronized void add (User user){
+        userList.put(user.getId(), user);
     }
 
-    public synchronized boolean update(User user){
-        boolean flag = false;
-        for (User tmp:userList) {
-            if (tmp.equals(user)) {
-                tmp.setAmount(user.getAmount());
-                flag = true;
-                break;
-            }
-        }
-        return flag;
+    public synchronized void update(User user){
+        userList.put(user.getId(), user);
     }
 
-    public synchronized boolean delete(User user){
-        return userList.remove(user);
+    public synchronized void delete(User user){
+        userList.remove(user.getId());
     }
 
     public synchronized void transfer(int fromId, int toId, int amount){
-        User userFrom = null;
-        User userTo = null;
-        for (User tmp:userList) {
-            if (tmp.getId() == fromId) {
-                userFrom = tmp;
-            }
-            if (tmp.getId() == toId) {
-                userTo = tmp;
-            }
-        }
+        User userFrom = userList.get(fromId);
+        User userTo = userList.get(toId);;
         if (userFrom != null && userTo != null) {
-            update(new User(userFrom.getId(), userFrom.getAmount() - amount));
-            update(new User(userTo.getId(), userTo.getAmount() + amount));
+            userFrom.setAmount(userFrom.getAmount() - amount);
+            userTo.setAmount(userTo.getAmount() + amount);
+            update(userFrom);
+            update(userTo);
         }
     }
 
