@@ -19,6 +19,10 @@ public class SimpleArray<T> implements Iterable<T> {
         }
     }
 
+    public SimpleArray() {
+       this(0);
+    }
+
     public void add(T model) {
         this.array[position++] = model;
     }
