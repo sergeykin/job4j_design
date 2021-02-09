@@ -15,10 +15,8 @@ public class CountBarrier {
     public void count() {
         synchronized (monitor) {
             System.out.println("count=" + String.valueOf(count));
-            if (count >= total) {
-                monitor.notifyAll();
-            }
             count ++;
+            monitor.notifyAll();
         }
     }
 
