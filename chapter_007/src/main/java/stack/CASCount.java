@@ -14,13 +14,12 @@ public class CASCount {
     }
 
     public void increment() {
-        Integer newValue = count.get() + 1 ;
+        Integer newValue;
         Integer ref;
         do {
+            newValue = count.get() + 1 ;
             ref = count.get();
         } while (!count.compareAndSet(ref, newValue));
-        //Integer newValue = count.get() + 1 ;
-        //count.getAndSet(newValue);
     }
 
     public int get() {
