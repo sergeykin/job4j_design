@@ -6,6 +6,9 @@ import java.util.Map;
 
 public class Main {
     public static void main(String[] args) {
+        int size = Runtime.getRuntime().availableProcessors();
+        System.out.println(size);
+
         Map<Integer, Base> map = new HashMap<>();
         Base base = new Base(1, 0);
         map.put(base.getId(), base);
