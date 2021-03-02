@@ -17,7 +17,7 @@ public class CacheTest {
         Base base = new Base(1, 0);
         base.setName("Base1");
         cache.add(base);
-        assertThat(base.getName(), is(cache.getMemory().get(base.getId()).getName()));
+        assertThat(base.getName(), is(cache.memory.get(base.getId()).getName()));
     }
 
     @Test
@@ -29,8 +29,8 @@ public class CacheTest {
         cache.add(base);
         newbase.setName("Base2");
         cache.update(newbase);
-        assertThat("Base2", is(cache.getMemory().get(base.getId()).getName()));
-        assertThat(1, is(cache.getMemory().get(base.getId()).getVersion()));
+        assertThat("Base2", is(cache.memory.get(base.getId()).getName()));
+        assertThat(1, is(cache.memory.get(base.getId()).getVersion()));
     }
 
     @Test
@@ -40,6 +40,6 @@ public class CacheTest {
         base.setName("Base1");
         cache.add(base);
         cache.delete(base);
-        assertThat(0, is(cache.getMemory().size()));
+        assertThat(0, is(cache.memory.size()));
     }
 }
