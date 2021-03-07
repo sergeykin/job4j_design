@@ -36,8 +36,10 @@ public class ParallelSearchIndex extends RecursiveTask<Integer> {
     }
 
     private Integer linearSearch() {
-        if (searchIndex >= from && searchIndex <= to) {
-            return searchIndex;
+        for (int i = from; i <= to ; i++) {
+            if (i == searchIndex) {
+                return searchIndex;
+            }
         }
         return -1;
     }
