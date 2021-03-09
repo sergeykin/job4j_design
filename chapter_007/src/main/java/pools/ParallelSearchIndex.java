@@ -7,9 +7,9 @@ public class ParallelSearchIndex extends RecursiveTask<Integer> {
     private final Object[] objects;
     private final int from;
     private final int to;
-    private final int searchIndex;
+    private final Object searchIndex;
 
-    public ParallelSearchIndex(Object[] objects, int from, int to, int searchIndex) {
+    public ParallelSearchIndex(Object[] objects, int from, int to, Object searchIndex) {
         this.objects = objects;
         this.from = from;
         this.to = to;
@@ -37,8 +37,8 @@ public class ParallelSearchIndex extends RecursiveTask<Integer> {
 
     private Integer linearSearch() {
         for (int i = from; i <= to ; i++) {
-            if (i == searchIndex) {
-                return searchIndex;
+            if (objects[i].equals(searchIndex)) {
+                return i;
             }
         }
         return -1;
@@ -51,6 +51,9 @@ public class ParallelSearchIndex extends RecursiveTask<Integer> {
 
     public static void main(String[] args) {
         Object[] objects = new Object[100];
-        System.out.println(ParallelSearchIndex.search(objects,99));
+        for (int i = 0; i < objects.length; i++) {
+            objects[i] = Integer.valueOf(i);
+        }
+        System.out.println(ParallelSearchIndex.search(objects,70));
     }
 }
